@@ -10,7 +10,7 @@ export class TaskComponent {
   @Input() content!: string;
 
   // state: 'None' | 'Doing' | 'Finish' = 'None';
-  @Input() state!: 'None' | 'Doing' | 'Other';
+  @Input() state!: 'None' | 'Doing' | 'Finish';
   onSetState(state: 'None' | 'Doing' | 'Finish'): void{
     this.state = state;
   }
