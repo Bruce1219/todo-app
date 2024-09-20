@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'todo-app';
+  content = '建立代辦事項元件';
+  type: 'Home' | 'Work' | 'Other' = 'Work';
+  state: 'None' | 'Doing' | 'Finish' = 'None';
 }
