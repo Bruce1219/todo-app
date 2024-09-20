@@ -1,0 +1,25 @@
+<!-- <div [style]="{ fontSize: fontSize + 'pt', color: color}">類型: {{ type }}</div> -->
+<!-- <div [class]="className">類型: {{ type }}</div> -->
+<div 
+    [class.home]="type === 'Home'"
+    [class.work]="type === 'Work'"
+    [class.other]="type === 'Other'"
+    >類型: {{ type }}
+</div>
+<div>Task1 - {{ content }}</div>
+<div>代辦事項狀態: {{ state }}</div>
+<button type="button" 
+        [disabled]="state === 'None'"
+        (click)="onSetState('None')">
+    未安排
+    </button>
+<button type="button" 
+        [disabled]="state === 'Doing'"
+        (click)="onSetState('Doing')">
+    進行中
+</button>
+<button type="button" 
+        [attr.disabled]="state === 'Finish' ? 'disabled' : null"
+        (click)="onSetState('Finish')">
+    已完成
+</button>
