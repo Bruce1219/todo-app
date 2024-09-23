@@ -1,41 +1,57 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, numberAttribute, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrl: './task.component.css'
 })
-export class TaskComponent {
-  // content = '建立代辦事項元件';
-  @Input() content!: string;
+export class TaskComponent implements OnInit, OnChanges {
+  @Input({ required: true, transform: numberAttribute})
+  id!:number;
 
-  // state: 'None' | 'Doing' | 'Finish' = 'None';
-  @Input() state!: 'None' | 'Doing' | 'Finish';
-  // onSetState(state: 'None' | 'Doing' | 'Finish'): void{
-  //   this.state = state;
-  // }
-  @Output() stateChange = new EventEmitter<'None' | 'Doing' | 'Finish'>();
+  @Input({required: true})
+  content!:string;
+
+  @Input({required: true})
+  type!: 'Home' | 'Work' | 'Other';
+
+  @Input({required: true})
+  state!: 'None' | 'Doing' | 'Finish';
+  @Output()
+  stateChange = new EventEmitter<'None' | 'Doing' | 'Finish'>();
+
+  startDate?: Date;
+
+  finishDate?: Date;
+
+  ngOnInit(): void {
+    console.log('Angular OnInit Life Cycle Hook');
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('Angular OnChanges Life Cycle Hook', changes);
+    if(changes['state']){
+      this.setTaskDate();
+    }
+  }
+
   onSetState(state: 'None' | 'Doing' | 'Finish'): void{
     this.stateChange.emit(state);
   }
-  
-  // type: 'Home' | 'Work' | 'Other' = 'Work';
-  @Input() type!: 'Home' | 'Work' | 'Other';
 
-  fontSize = 14;
-  color = 'red';
-  className = 'work';
-
-  private _id!: number;  
-
-  @Input()
-  set id(id: string) {
-    this._id = +id;
-  }
-
-  get id(): string{
-    return this._id.toString();
-  }
-
-
+  setTaskDate(): void {
+    switch (this.state){
+      case 'None':
+        this.startDate = undefined;
+        this.finishDate = undefined;
+        break;
+      case 'Doing':
+        this.startDate = new Date();
+        this.finishDate = undefined;
+        break;
+      case 'Finish':
+        this.finishDate = new Date();
+        break;
+    }
+  } 
 }

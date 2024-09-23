@@ -8,6 +8,8 @@
 </div>
 <div>Task1 - {{ content }}</div>
 <div>代辦事項狀態: {{ state }}</div>
+<div>開始日期:{{ startDate }}</div>
+<div>完成日期:{{ finishDate }}</div>
 <button type="button" 
         [disabled]="state === 'None'"
         (click)="onSetState('None')">
