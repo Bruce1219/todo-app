@@ -1,27 +1,32 @@
 <!-- <div [style]="{ fontSize: fontSize + 'pt', color: color}">類型: {{ type }}</div> -->
 <!-- <div [class]="className">類型: {{ type }}</div> -->
-<div 
-    [class.home]="type === 'Home'"
-    [class.work]="type === 'Work'"
-    [class.other]="type === 'Other'"
-    >類型: {{ type }}
+<div class="content">
+    <div>
+        <span [ngClass]="contentClass">{{task.id}}.{{task.content}}</span>
+        <span 
+            [class.home]="task.type === 'Home'"
+            [class.work]="task.type === 'Work'"
+            [class.other]="task.type === 'Other'"
+        >
+            {{ task.type }}
+        </span>
+        <span> - 開始日期:{{ startDate }} / 完成日期: {{finishDate}}</span>
+    </div>
+    <span>{{task.state}}</span>
 </div>
-<div>Task1 - {{ content }}</div>
-<div>代辦事項狀態: {{ state }}</div>
-<div>開始日期:{{ startDate }}</div>
-<div>完成日期:{{ finishDate }}</div>
+
 <button type="button" 
-        [disabled]="state === 'None'"
+        [disabled]="task.state === 'None'"
         (click)="onSetState('None')">
     未安排
     </button>
 <button type="button" 
-        [disabled]="state === 'Doing'"
+        [disabled]="task.state === 'Doing'"
         (click)="onSetState('Doing')">
     進行中
 </button>
 <button type="button" 
-        [attr.disabled]="state === 'Finish' ? 'disabled' : null"
+        [attr.disabled]="task.state === 'Finish' ? 'disabled' : null"
         (click)="onSetState('Finish')">
     已完成
 </button>

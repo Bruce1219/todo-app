@@ -4,20 +4,29 @@
 <div *ngTemplateOutlet="task; context: { $implicit: 2, totalCount: 2, finishCount: 1 }"></div>
 <p>123</p>
 <p>After ng-template</p>
+<h3>ngIf</h3>
+<div *ngIf="tasks.length >= 1; then list; else empty"></div>
 
 <app-page-container>
-    <h3>代辦事項清單</h3>
+    <h3>app-page-container</h3>
+    <h3 #title>代辦事項清單</h3>
     <div class="page-button">
-        <button>新增</button>
-        <button>查詢</button>
+        <button type="button" (click)="onReset()">重設</button>
+        <button #button>新增</button>
+        <button #button>查詢</button>
     </div>
-    <app-task 
-        id="1" 
-        [content]="content" 
-        [type]="type" 
-        [(state)]="state"
-    >
-    </app-task>
+    <div *ngIf="tasks.length >= 1">
+        <app-task 
+        *ngFor="let task of tasks; let odd = odd; trackBy: trackById"
+        [class.odd]="odd"
+        [task]="task"
+        (stateChange)="onSetState(task, $event)"
+        >
+        </app-task>
+    </div>
+    <ng-template #empty>
+        <div class="data-empty">無代辦事項</div>
+    </ng-template>
     <div class="footer">
         <div>代辦事項總數: {{ totalCount }}</div>
         <div>已完成個數: {{ finishCount }}</div>
@@ -28,15 +37,27 @@
 
 <ng-template #task let-id let-totalCount="totalCount" let-finishCount="finishCount">
     <app-task 
-        [id]="id" 
-        [content]="content" 
-        [type]="type" 
-        [(state)]="state"
+    class="odd"
+    [task]="task_1"
+    (stateChange)="onSetState(task_1, $event)"
         >
     </app-task>
     <hr>
     <div>代辦事項總數: {{ totalCount }}</div>
     <div>已完成個數: {{ finishCount }}</div>
     <div>剩下代辦事項個數: {{ totalCount - finishCount }}</div>
+</ng-template>
 
+<ng-template #list>
+    <app-task 
+        *ngFor="let task of tasks; let odd = odd; trackBy: trackById"
+        [class.odd]="odd"
+        [task]="task"
+        (stateChange)="onSetState(task, $event)"
+        >
+        </app-task>
+</ng-template>
+
+<ng-template #empty>
+    <div class="data-empty">無代辦事項</div>
 </ng-template>

@@ -1,9 +1,56 @@
-.home{
+:host {
+    display: block;
+    border: solid 1px black;
+    padding: 10px 15px;
+  }
+  
+  :host(.odd) {
+    background-color: #ccc;
+  }
+  
+  :host-context(.small) {
+    font-size: 10pt;
+    width: 400px;
+  }
+  
+  button:not(:last-child) {
+    margin-right: 0.5em;
+  }
+  
+  .content {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .important {
+    font-weight: bolder;
+  }
+  
+  .urgent {
     color: red;
-}
-.work{
-    color: green;
-}
-.other{
+  }
+  
+  .type {
+    display: inline-block;
+    font-size: 10pt;
+    border: solid 1px #999;
+    padding: 2px 5px;
+    margin-left: 10px;
+  }
+  
+  .home {
     color: blue;
-}
+  }
+  
+  .work {
+    color: green;
+  }
+  
+  .other {
+    color: black;
+  }
+  
+  .button {
+    text-align: right;
+  }
+  
