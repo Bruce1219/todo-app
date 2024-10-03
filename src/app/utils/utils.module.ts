@@ -3,18 +3,21 @@ import { CommonModule } from '@angular/common';
 
 import { UtilsRoutingModule } from './utils-routing.module';
 import { PageContainerComponent } from './page-container/page-container.component';
+import { OrderByPipe } from './pipe/order-by.pipe';
 
 
 @NgModule({
   declarations: [
-    PageContainerComponent
+    PageContainerComponent,
+    OrderByPipe
   ],
   imports: [
     CommonModule,
     UtilsRoutingModule
   ],
   exports: [
-    PageContainerComponent
+    PageContainerComponent,
+    OrderByPipe
   ]
 })
 export class UtilsModule { }

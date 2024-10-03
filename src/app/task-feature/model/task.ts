@@ -13,6 +13,12 @@ export class Task {
 
     urgent!: boolean;
 
+    money!: number;
+
     state!: 'None' | 'Doing' | 'Finish';
+
+    startDate!: Date | undefined;
+
+    finishDate!: Date | undefined;
   }
   

@@ -1,0 +1,17 @@
+<table border="1">
+    <tr>
+        <th>欄位</th>
+        <th>內容</th>
+    </tr>
+    <tr *ngFor="let t of task | keyvalue">
+        <td>{{ t.key }}</td>
+        <td>
+        <ng-container *ngIf="!(t.key === 'startDate' || t.key === 'finishDate')">
+            {{ t.value }}
+        </ng-container>
+        <ng-container *ngIf="t.key === 'startDate' || t.key === 'finishDate'">
+            {{ $any(t.value) | date : "yyyy-MM-dd" }}
+        </ng-container>
+        </td>
+    </tr>
+</table>  

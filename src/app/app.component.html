@@ -6,27 +6,34 @@
 <p>After ng-template</p>
 <h3>ngIf</h3>
 <div *ngIf="tasks.length >= 1; then list; else empty"></div>
+<h3>Service</h3>
+
 
 <app-page-container>
     <h3>app-page-container</h3>
     <h3 #title>代辦事項清單</h3>
-    <div class="page-button">
-        <button type="button" (click)="onReset()">重設</button>
-        <button #button>新增</button>
-        <button #button>查詢</button>
+    <div page-button class="page-button">
+        <div>
+            <span class="user">使用者: {{userId}}</span>
+            <ng-container *appLimitCase="'admin'">
+                <button>新增</button>
+            </ng-container>
+            <button type="button" appBlackButton>查詢</button>
+        </div>
+        <div>
+            <span>
+                <strong>排序方向:</strong>
+                {{ direction === "asc" ? "昇冪" : "降冪" }}
+            </span>
+            <button type="button" (click)="direction = 'asc'">昇冪</button>
+            <button type="button" (click)="direction = 'desc'">降冪</button>
+        </div>
     </div>
-    <div *ngIf="tasks.length >= 1">
-        <app-task 
-        *ngFor="let task of tasks; let odd = odd; trackBy: trackById"
-        [class.odd]="odd"
-        [task]="task"
-        (stateChange)="onSetState(task, $event)"
-        >
-        </app-task>
-    </div>
-    <ng-template #empty>
-        <div class="data-empty">無代辦事項</div>
-    </ng-template>
+    <ng-container *ngIf="tasks.length >= 1; then list; else empty"></ng-container>
+    <app-task-detail
+        *ngIf="selectedId !== undefined"
+        [id]="selectedId"
+    ></app-task-detail>
     <div class="footer">
         <div>代辦事項總數: {{ totalCount }}</div>
         <div>已完成個數: {{ finishCount }}</div>
@@ -50,7 +57,12 @@
 
 <ng-template #list>
     <app-task 
-        *ngFor="let task of tasks; let odd = odd; trackBy: trackById"
+        appOverHeighLight
+        *ngFor="
+        let task of tasks | orderBy: 'id' : direction;
+        let odd = odd; 
+        trackBy: trackById
+        "
         [class.odd]="odd"
         [task]="task"
         (stateChange)="onSetState(task, $event)"

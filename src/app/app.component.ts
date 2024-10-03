@@ -1,14 +1,27 @@
-import { Component, OnInit, AfterViewInit, AfterViewChecked, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterViewChecked, ViewChild, inject } from '@angular/core';
 
 import { Task } from './task-feature/model/task';
 
 import { TaskComponent } from './task-feature/task/task.component';
+
+import { TaskService } from './task-feature/services/task.service'
+
+import { getTasks } from './task-feature/function/get.task'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  taskService = inject(TaskService);
+
+  userId:string =  'admin';
+
+  tasks: Task[] = getTasks();
+
+  selectedId?: number;
+
+  direction: 'asc' | 'desc' = 'asc';
 
   @ViewChild(TaskComponent)
   viewTask!: TaskComponent;
@@ -24,33 +37,6 @@ export class AppComponent {
     urgent: true,
     state: 'None',
   });
-
-  tasks = [
-    new Task({
-      id: 1,
-      content: '建立待辦事項元件',
-      type: 'Work',
-      important: true,
-      urgent: true,
-      state: 'None',
-    }),
-    new Task({
-      id: 2,
-      content: '購買 iPhone 手機 - 30000',
-      type: 'Other',
-      important: false,
-      urgent: false,
-      state: 'None',
-    }),
-    new Task({
-      id: 3,
-      content: '家庭聚餐',
-      type: 'Home',
-      important: true,
-      urgent: false,
-      state: 'None',
-    }),
-  ];
 
   title = 'todo-app';
   content = '建立代辦事項元件';
