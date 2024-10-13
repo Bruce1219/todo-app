@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
+import { filter, mergeMap, Observable, of, toArray } from 'rxjs';
+
 
 import { Task } from '../model/task';
+import { ITaskService } from '../interface/task.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TaskService {
+export class TaskService implements ITaskService {
+  getRowData(): Observable<string> {
+    throw new Error('Method not implemented.');
+  }
   private tasks = [
     new Task({
       id: 1,
@@ -36,12 +42,16 @@ export class TaskService {
     }),
   ];
 
-  getTask(id: number): Task {
-    return this.tasks.find((task) => task.id === id)!;
+  getTask(id: number): Observable<Task> {
+    return of(this.tasks.find((task) => task.id === id)!);
   }
 
-  getTasks(): Task[] {
-    return this.tasks;
+  getTasks(state?: 'None' | 'Doing' | 'Finish'): Observable<Task[]> {
+    return of(this.tasks).pipe(
+      mergeMap((data) => data),
+      filter((task) => !state || task.state === state),
+      toArray()
+    );
   }
 
   setState(id: number, state: 'None' | 'Doing' | 'Finish'): void {

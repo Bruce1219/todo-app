@@ -19,7 +19,7 @@ export class TaskDetailComponent implements OnChanges{
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['id']) {
-      this.task = this.taskService.getTask(this.id)
+      this.taskService.getTask(this.id).subscribe((task) => (this.task = task));
     }
   }
 }

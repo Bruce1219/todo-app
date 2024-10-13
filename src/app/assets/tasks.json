@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "content": "建立待辦事項元件",
+        "type": "Work",
+        "important": true,
+        "urgent": true,
+        "state": "None"
+    },
+    {
+        "id": 2,
+        "content": "購買 iPhone 手機",
+        "type": "Other",
+        "important": false,
+        "urgent": false,
+        "money": 30000,
+        "state": "Finish",
+        "startDate": "Sat Apr 01 2023 00:00:00 GMT+0800",
+        "finishDate": "Sat Apr 01 2023 00:00:00 GMT+0800"
+    },
+    {
+        "id": 3,
+        "content": "家庭聚餐",
+        "type": "Home",
+        "important": true,
+        "urgent": false,
+        "state": "None"
+    }
+]

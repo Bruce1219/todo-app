@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TaskFeatureModule } from './task-feature/task-feature.module';
 import { UtilsModule } from './utils/utils.module';
+import { TaskServiceToken } from './task-feature/interface/task.interface';
+import { TaskService } from './task-feature/services/task.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,7 @@ import { UtilsModule } from './utils/utils.module';
     UtilsModule
 
   ],
-  providers: [],
+  providers: [{provide: TaskServiceToken, useClass: TaskService}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

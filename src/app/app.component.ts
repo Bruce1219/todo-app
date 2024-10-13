@@ -7,17 +7,20 @@ import { TaskComponent } from './task-feature/task/task.component';
 import { TaskService } from './task-feature/services/task.service'
 
 import { getTasks } from './task-feature/function/get.task'
+import { TaskServiceToken } from './task-feature/interface/task.interface';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  taskService = inject(TaskService);
+  taskService = inject(TaskServiceToken);
 
   userId:string =  'admin';
 
-  tasks: Task[] = getTasks();
+  tasks: Task[] = [];
+
+  rowData!: string;
 
   selectedId?: number;
 
@@ -56,6 +59,11 @@ export class AppComponent {
       'Angular ngOnInit Lift Cycle Hook - staticTask',
       this.staticTask
     );
+    this.taskService.getTasks().subscribe((tasks) => (this.tasks = tasks))
+
+    this.taskService
+      .getRowData()
+      .subscribe((rowData) => (this.rowData = rowData))
   }
 
   ngAfterViewInit(): void {
